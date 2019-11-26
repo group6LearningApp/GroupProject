@@ -22,3 +22,15 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Free Trial (981685b1-f8c8-4d73-b6d3-81d567c7fcbd)'
+    appType: 'webAppLinux'
+    WebAppName: 'learningAppCS353'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'cs353group6'
+    SlotName: 'production'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'NODE|lts'
+    StartupCommand: 'dotnet run'
