@@ -5,6 +5,11 @@
 
 trigger:
 - master
+- task: AzureAppServiceManage@0
+  inputs:
+    azureSubscription: 'Free Trial (981685b1-f8c8-4d73-b6d3-81d567c7fcbd)'
+    Action: 'Start Azure App Service'
+    WebAppName: 'learningAppCS353'
 
 pool:
   vmImage: 'ubuntu-latest'
