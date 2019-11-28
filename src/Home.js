@@ -42,7 +42,7 @@ class Home extends Component {
         return (
         this.state.user ? (
           <div>
-          <h1>Hi  </h1>
+          <h1>Hello  </h1>
           <h2>Learning App</h2>
           <p>Please select language of choice</p>
           <LanguageDrop />
