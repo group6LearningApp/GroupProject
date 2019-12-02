@@ -11,40 +11,35 @@ class Home extends Component {
         this.state = {
             user:{},
             email:'',
+            users: {},
+            key: ''
         }
     }
     componentDidMount() {
-        this.authListener();
-      }
-      
-
-      authListener() {
         fire.auth().onAuthStateChanged((user) => {
-          //console.log(user);
           if(user) {
             this.setState({ user });
-            const db = fire.firestore();
-            var docRef = db.collection('users').doc(this.state.user.uid);
-
-            docRef.get().then(function(doc) {
-              if (doc.exists) {
-                  console.log("Document data:", doc.data());
-              } else {
-                  // doc.data() will be undefined in this case
-                  console.log("No such document!");
-              }
-          }).catch(function(error) {
-              console.log("Error getting document:", error);
-          });
-          } 
-        });
+        var ref = fire.firestore().collection('users').doc(this.state.user.uid);
+        ref.get().then((doc) => {
+          if(doc.exists) {
+            console.log(doc.data());
+            this.setState({
+              
+              users: doc.data(),
+              key: doc.id
+              
+            })
+          }
+        })
+      }
+      }); 
       }
       
     render() {     
         return (
         this.state.user ? (
           <div>
-          <h1>Hello </h1>
+          <h1>Hello {this.state.users.firstname} {this.state.users.lastame}</h1>
           <h2>Learning App</h2>
           <p>Please select language of choice</p>
           <LanguageDrop />
