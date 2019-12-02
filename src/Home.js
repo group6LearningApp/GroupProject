@@ -7,18 +7,12 @@ import './Home.css';
 class Home extends Component {
     constructor(props) {
         super(props);
-        this.logout = this.logout.bind(this);
+        
         this.state = {
             user:{},
-            email:''
+            email:'',
         }
     }
-   
-
-    logout() {
-        fire.auth().signOut();
-    }
-
     componentDidMount() {
         this.authListener();
       }
@@ -26,23 +20,31 @@ class Home extends Component {
 
       authListener() {
         fire.auth().onAuthStateChanged((user) => {
-          console.log(user);
+          //console.log(user);
           if(user) {
             this.setState({ user });
             const db = fire.firestore();
-            db.collection('users').doc(user.uid).get().then(doc => {
-              var firstname = doc.data().firstname;
-              console.log(firstname);
-            }) 
+            var docRef = db.collection('users').doc(this.state.user.uid);
+
+            docRef.get().then(function(doc) {
+              if (doc.exists) {
+                  console.log("Document data:", doc.data());
+              } else {
+                  // doc.data() will be undefined in this case
+                  console.log("No such document!");
+              }
+          }).catch(function(error) {
+              console.log("Error getting document:", error);
+          });
           } 
         });
       }
       
-    render() {
+    render() {     
         return (
         this.state.user ? (
           <div>
-          <h1>Hello  </h1>
+          <h1>Hello </h1>
           <h2>Learning App</h2>
           <p>Please select language of choice</p>
           <LanguageDrop />
@@ -50,7 +52,7 @@ class Home extends Component {
           </div>   
           ) : (
           <div>
-          <h1>Hi Uregistered User! If you wan to write posts please create an account or login.</h1>
+          <h1>Hi Uregistered User! If you want to write posts please create an account or login.</h1>
           <h2>Learning App</h2>
           <p>Please select language of choice</p>
           <LanguageDrop />
