@@ -20,3 +20,18 @@
 .App-link {
   color: #09d3ac;
 }
+
+
+.Languages{ 
+  color: #b48608; font-family: 'Droid serif', serif; font-size: 36px;
+  font-weight: 400; font-style: italic; line-height: 44px; margin: 0 0 12px; text-align: center; }
+  
+  body {
+    padding: 0;
+    margin: 0;
+}
+.Carousel{
+  width :100%;
+  padding: 0;
+  margin: 0;
+}
