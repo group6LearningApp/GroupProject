@@ -4,8 +4,8 @@ import Carousel from 'react-bootstrap/Carousel'
 import './App.css';
 export const About = () => (
 
-<div width='100%' class='Carousel'>
-<div width='100%' class='Carousel'>
+<div width='100%' >
+<div width='100%' >
     <h1 class="Languages">CS353 Group Project</h1>
     </div>
     <div width='100%'>
