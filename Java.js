@@ -1,5 +1,6 @@
-//This version of Ben's Java.js file contains an Ask a Question Form
-//appearing when you click onto "Java" topic in the dropdown menu
+//This is a modified version of Ben's Java.js file.
+//It contains an "Ask a Question" Form appearing when
+//you click onto "Java" topic in the dropdown menu
 
 import React, { Component } from 'react';
 import fire from '../config/Fire';
