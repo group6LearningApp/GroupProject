@@ -20,31 +20,18 @@ class NavigationBar extends Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
-    this.state = {
-        user:{},
-        email:''
-    }
 }
+
+
+ 
+
 
 
 logout() {
     fire.auth().signOut();
 }
 
-componentDidMount() {
-    this.authListener();
-  }
   
-
-  authListener() {
-    fire.auth().onAuthStateChanged((user) => {
-      //console.log(user);
-      if(user) {
-        this.setState({ user });
-       
-      } 
-    });
-  }
 
   render() {
     return (
@@ -70,7 +57,14 @@ componentDidMount() {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link onClick={this.logout}>Sign out</Nav.Link>
+              <Nav.Link>
+                <Link to="/UserProfile">Profile</Link>
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link onClick={this.logout}>
+                <Link to="/">Sign out</Link>
+                </Nav.Link>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
