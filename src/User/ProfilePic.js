@@ -29,7 +29,7 @@ handleChange = e => {
    
 handleUpload = () => {
     const {image} = this.state;
-    const uploadTask = fire.storage().ref(`images/${image.name}`).put(image);
+    const uploadTask = fire.storage().ref(`images/${this.state.user.uid}/${image.name}`).put(image);
     uploadTask.on('state_changed', 
     (snapshot) => {
       // progrss function ....
@@ -42,7 +42,7 @@ handleUpload = () => {
     }, 
   () => {
       // complete function ....
-      fire.storage().ref('images').child(image.name).getDownloadURL().then(url => {
+      fire.storage().ref('images/').child(this.state.user.uid).child(image.name).getDownloadURL().then(url => {
           console.log(url);
           this.setState({url});
       })
@@ -56,7 +56,7 @@ componentDidMount() {
     var ref = fire.firestore().collection('users').doc(this.state.user.uid);
     ref.get().then((doc) => {
       if(doc.exists) {
-        console.log(doc.data());
+        //console.log(doc.data());
         this.setState({
           
           users: doc.data(),
@@ -69,26 +69,7 @@ componentDidMount() {
   }); 
   }
 
-  
-
-  
-
-  
-
-
-  
-
     render() {
-        let Results = ({
-            render: function() {
-                return (
-                    <div id="results" className="search-results">
-                       
-                    </div>
-                );
-            }
-        });
-        
         const style = {
             
             display: 'flex',
@@ -99,16 +80,12 @@ componentDidMount() {
         };
         return (
         <React.Fragment>
-           
-                
-            
-            
-          
             <div style = {style}>
             <br/>
             <progress value={this.state.progress} max="100"/>
             <input type="file" onChange={this.handleChange}/>
             <button onClick={this.handleUpload}>Upload</button>
+            <br/>
             <img src={this.state.url || 'http://via.placeholder.com/400x300'} alt="Uploaded images" height="300" width="400"/>
             </div>
         </React.Fragment>
