@@ -29,7 +29,7 @@ handleChange = e => {
    
 handleUpload = () => {
     const {image} = this.state;
-    const uploadTask = fire.storage().ref(`images/${this.state.user.uid}/${image.name}`).put(image);
+    const uploadTask = fire.storage().ref(`images/${this.state.user.uid}/pic.jpg`).put(image);
     uploadTask.on('state_changed', 
     (snapshot) => {
       // progrss function ....
@@ -42,7 +42,7 @@ handleUpload = () => {
     }, 
   () => {
       // complete function ....
-      fire.storage().ref('images/').child(this.state.user.uid).child(image.name).getDownloadURL().then(url => {
+      fire.storage().ref('images/').child(this.state.user.uid).child('pic.jpg').getDownloadURL().then(url => {
           console.log(url);
           this.setState({url});
       })
@@ -56,6 +56,10 @@ componentDidMount() {
     var ref = fire.firestore().collection('users').doc(this.state.user.uid);
     ref.get().then((doc) => {
       if(doc.exists) {
+        fire.storage().ref('images/').child(this.state.user.uid).child('pic.jpg').getDownloadURL().then(url => {
+          console.log(url);
+          this.setState({url});
+      })
         //console.log(doc.data());
         this.setState({
           
