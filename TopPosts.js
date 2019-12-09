@@ -13,19 +13,7 @@ class TopPosts extends Component {
         }
     }
 
-    /*componentDidMount = () => {
-        db.collection("Posts").get().then(snapshot => (
-            snapshot.forEach((doc) => (
-                this.setState((prevState) => ({
-                    posts: [...prevState.posts, {
-                        contents: doc.data().Contents
-                    }]
-                }))
-            ))
-        ))
-    }*/
-
-    componentDidMount() {
+    /*componentDidMount() {
         let posts = [];
         db.collection("Posts").get().then((snapshot) => (
             snapshot.forEach((doc) => (
@@ -35,11 +23,66 @@ class TopPosts extends Component {
             ))
         ));
         this.setState({ posts })
+    }*/
+
+    updateInput = e => {
+        this.setState({
+            [e.target.contents]: e.target.value
+        });
     }
+
+    addUser = e => {
+        e.preventDefault();
+        let posts = [];
+        db.settings({
+        timestampsInSnapshots: true
+        });
+        const userRef = db.collection("Posts").get.then(snapshot => {
+            posts.push({
+                contents: this.state.Contents
+            })
+        });  
+        this.setState({
+            userRef
+        });
+    };
+
+    /*async componentDidMount() {
+        let posts = [];
+        await db.collection("Posts").get().then(function (querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                console.log(doc.id, ' => ', doc.data());
+                posts.push({ contents: doc.data().Contents.replace(/( )/g, ''), });
+            });
+        });
+        this.setState({
+          posts
+        });
+    }*/
+
+    /*handleSubmit = (formState, { resetForm }) => {
+      // Now, you're getting form state here!
+      const fdb = fire.firestore();
+      const payload = {
+        ...formState,
+        fieldOfResearch: formState.fieldOfResearch.map(t => t.value)
+      }
+      console.log("formvalues", payload);
+      fdb
+      .collection("project")
+      .add(payload)
+      .then(docRef => {
+        console.log("docRef>>>", docRef);
+        resetForm(TopPosts);
+      })
+      .catch(error => {
+        console.error("Error adding document: ", error);
+      });
+    }*/
 
     render() {
         let ForumInfo = this.state.posts.map((person) => 
-            <ListGroup.Item>plz {person.contents}</ListGroup.Item> 
+            <ListGroup.Item>{person.contents}</ListGroup.Item> 
         )
 
         return (
