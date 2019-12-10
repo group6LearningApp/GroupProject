@@ -1,5 +1,7 @@
+//Java.js file
+//Mariia Skyba
+
 /*
-This is a modified version of Ben's Java.js file. 
 After selecting a Java language from the fropdown menu - a general information about the language selected
 is displayed with two buttons underneath it which when clicked - call "Ask a Question" Form and "Post Resource" Form respectively
 appearing when you click onto "Java" topic in the dropdown menu. 
