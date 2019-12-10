@@ -21,7 +21,7 @@
   color: #09d3ac;
 }
 
-/*Mariia: Styling of the AskQuestionForm and PostResourceForm*/
+/*Mariia Skyba: Styling of the AskQuestionForm and PostResourceForm*/
 .wrapper{
   margin-top: 30px;
   height: 100%;
@@ -84,10 +84,8 @@ label{
   font-weight: lighter;
 }
 
-/*.topic,
-.tags,
-.description*/input{
-  padding: 10px 10px;
+input{
+  padding: 10px 5px;
   border-radius: 5px;
   outline: none;
   border: 1px solid #cfcfcf;
@@ -123,22 +121,32 @@ border: 1px solid red;
 .tags{
   margin-left: 1%;
 }
+/*toggleForm = e => {
+  e.preventDefault();
+  
+};*/
+
+
 
 .topic,
 .tags,
-.description,
 .attachment,
 .title,
+.topic,
 .content{
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
 }
 
+.tags{
+  width: 10px;
+}
+
 .title,
+.topic,
 .content{
   display: flex;
-  flex-direction: row;
   margin-bottom: 15px;
   width: 100%;
 }
@@ -146,10 +154,6 @@ border: 1px solid red;
 .topic,
 .tags{
   width: 49%;
-}
-
-.description{
-  width: 100%;
 }
 
 .post_body,
@@ -181,4 +185,4 @@ border: 1px solid red;
   color: #999;
   font-weight: lighter;
 }
-/*end of styling */
+/*end of forms styling */
