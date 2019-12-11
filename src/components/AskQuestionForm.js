@@ -91,7 +91,7 @@ class AskQuestionForm extends Component{
             </div>
 
             {/* Submit a question button */}
-            <button type="submit" className="create">ASK A QUESTION</button>          
+            <button type="submit" className="submit">ASK A QUESTION</button>          
           </form>
         </div>
       </div>
