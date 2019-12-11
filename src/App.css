@@ -172,7 +172,8 @@ border: 1px solid red;
 .content{
   height: 200px;
 }
-.create{
+
+.submit{
   background-color: #337c69;
   color: #fff;
   border: 1px solid #fff;
@@ -180,6 +181,19 @@ border: 1px solid red;
   width: 40%;
   margin-top: 5px;
   margin-left:220px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 0.25em;
+  border-radius: 5px;
+}
+.create{
+  background-color: #337c69;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 10px;
+  width: 40%;
+  margin-top: 5px;
+  position: relative;
   font-weight: bold;
   letter-spacing: 2px;
   margin-bottom: 0.25em;
