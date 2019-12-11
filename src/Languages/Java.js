@@ -50,7 +50,7 @@ export default class Java extends Component {
               The syntax of Java is similar to C and C++, but it has fewer low-level facilities than either of them. As of 2019, Java was one of the most popular programming languages in use according to GitHub, particularly for client-server web applications, with a reported 9 million developers.
             </div>
 
-            <div class = "header"><b>Authors</b></div>
+            <div class = "header"><b>Creators</b></div>
             <div>
               Java was originally developed by James Gosling at Sun Microsystems (which has since been acquired by Oracle) and released in 1995 as a core component of Sun Microsystems' Java platform. The original and reference implementation Java compilers, virtual machines, and class libraries were originally released by Sun under proprietary licenses.
             </div>
