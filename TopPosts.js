@@ -1,117 +1,98 @@
-import React, {Component} from 'react'
-import { Accordion, Card, ListGroup, Button } from 'react-bootstrap';
-//(Shane) \/ Rewrote code in friendlier format
-import fire from '../config/Fire';
+import React from 'react'
+import {db , auth } from '../config/Fire.js'
+import { Link } from 'react-router-dom';
+//import { Accordion, Card, Button, Table , ListGroup } from 'react-bootstrap';
+//import '../App.css'
 
-const db = fire.firestore();
-
-class TopPosts extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            posts: []
-        }
+class TopPosts extends React.Component{
+    state = {
+       students:null
     }
 
-    /*componentDidMount() {
-        let posts = [];
-        db.collection("Posts").get().then((snapshot) => (
-            snapshot.forEach((doc) => (
-                posts.push({
-                    contents: doc.data().Contents
-                })
-            ))
-        ));
-        this.setState({ posts })
-    }*/
-
-    updateInput = e => {
-        this.setState({
-            [e.target.contents]: e.target.value
-        });
-    }
-
-    addUser = e => {
-        e.preventDefault();
-        let posts = [];
-        db.settings({
-        timestampsInSnapshots: true
-        });
-        const userRef = db.collection("Posts").get.then(snapshot => {
-            posts.push({
-                contents: this.state.Contents
+    componentDidMount(){{
+      db.collection('TopPosts')
+        .get()
+        .then( snapshot=>{
+            const TopPosts = []
+            snapshot.forEach(doc=>{
+              const data = doc.data()
+              TopPosts.push(data) 
             })
-        });  
-        this.setState({
-            userRef
-        });
-    };
-
-    /*async componentDidMount() {
-        let posts = [];
-        await db.collection("Posts").get().then(function (querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                console.log(doc.id, ' => ', doc.data());
-                posts.push({ contents: doc.data().Contents.replace(/( )/g, ''), });
-            });
-        });
-        this.setState({
-          posts
-        });
-    }*/
-
-    /*handleSubmit = (formState, { resetForm }) => {
-      // Now, you're getting form state here!
-      const fdb = fire.firestore();
-      const payload = {
-        ...formState,
-        fieldOfResearch: formState.fieldOfResearch.map(t => t.value)
-      }
-      console.log("formvalues", payload);
-      fdb
-      .collection("project")
-      .add(payload)
-      .then(docRef => {
-        console.log("docRef>>>", docRef);
-        resetForm(TopPosts);
-      })
-      .catch(error => {
-        console.error("Error adding document: ", error);
-      });
-    }*/
-
-    render() {
-        let ForumInfo = this.state.posts.map((person) => 
-            <ListGroup.Item>{person.contents}</ListGroup.Item> 
-        )
-
-        return (
-           <Accordion defaultActiveKey="0">
-           <Card>
-               <Card.Header>
-               <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                    Most Upvoted Posts
-               </Accordion.Toggle>
-               </Card.Header>
-               <Accordion.Collapse eventKey="0">
-               <ListGroup variant="flush">
-                   {ForumInfo}
-               </ListGroup>
-               </Accordion.Collapse>
-           </Card>
-           <Card>
-               <Card.Header>
-               <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                    Most Upvoted Questions
-               </Accordion.Toggle>
-               </Card.Header>
-               <Accordion.Collapse eventKey="1">
-               <Card.Body>Funuk</Card.Body>
-               </Accordion.Collapse>
-           </Card>
-           </Accordion>
-        )
+            this.setState({TopPosts:TopPosts})
+          
+        })
+      .catch(error =>console.log(error))
     }
+      db.collection('TopQuestions')
+        .get()
+        .then( snapshot=>{
+            const TopQuestions = []
+            snapshot.forEach(doc=>{
+              const data = doc.data()
+              TopQuestions.push(data) 
+            })
+            this.setState({TopQuestions:TopQuestions})
+        })
+      .catch(error =>console.log(error))
+    }
+     
+    
+  render(){
+    /*let GetPost = this.state.TopPosts && this.state.TopPosts.map( TopPosts =>
+      <ListGroup.Item><Link to="/PostPage">{TopPosts.Title}</Link></ListGroup.Item>
+    )
+    let GetQuestion = this.state.TopQuestions && this.state.TopQuestions.map( TopQuestions =>
+      <ListGroup.Item><Link to="/PostPage">{TopQuestions.Title}</Link></ListGroup.Item>
+    )*/
+    return(
+      /*<>
+        <Card>
+        <Card.Header>Top Posts</Card.Header>
+        <ListGroup>
+          {GetPost}
+        </ListGroup>
+      </Card>
+      <Card>
+        <Card.Header>Top Questions</Card.Header>
+        <ListGroup>
+          {GetQuestion}
+        </ListGroup>
+      </Card>
+    </>*/
+      <>
+        <div>
+          <h1>Top Posts</h1>
+          <table align="center" width="400" >
+            {this.state.TopPosts && this.state.TopPosts.map(TopPosts =>{
+              return(
+                <>
+                  <tr>
+                    <td>Title</td>
+                    <td><Link to="/PostPage">{TopPosts.Title}</Link></td>
+                  </tr>
+                </>
+              )
+            })}
+          </table> 
+        </div>
+        <div>
+          <h1>Top Questions</h1>
+          <table align="center" width="400">
+            {this.state.TopQuestions && this.state.TopQuestions.map(TopQuestions =>{
+              return(
+                <>
+                  <tr>
+                    <td>Title</td>
+                    <td><Link to="/PostPage" /*Info={{ Post: TopQuestions.id }}*/>{TopQuestions.Title}</Link></td>
+                  </tr>
+                </>
+              )
+            })}
+          </table>
+        </div>
+      </>
+    )
+  }
 }
 
-export default TopPosts;
+export default TopPosts
