@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { TopPosts } from './components/TopPosts';
+import  TopPosts from './TopPosts';
 import { LanguageDrop } from './components/LanguageDrop';
 import fire from './config/Fire';
 import './Home.css';
+
 
 class Home extends Component {
     constructor(props) {
