@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import '../App.css';
-import fire from '../config/Fire'; 
+import fire from '../config/Fire';
 
 class AskQuestionForm extends Component{
 
@@ -13,10 +13,59 @@ class AskQuestionForm extends Component{
     super();
     this.state = {
       //class attributes (fields in the AskQuestionForm)
+      user:{},
       title: "",
       content:"",
-      attachment: ""
+      users:{},
+      key:'',
+      image: null,
+      url: '',
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
+  }
+
+  handleChange = e => {
+    if(e.target.files[0]) {
+        const image = e.target.files[0];
+        this.setState(() => ({image}));
+    } 
+}
+
+handleUpload = () => {
+    const {image} = this.state;
+    const uploadTask = fire.storage().ref(`posts/${this.state.title}/pic.jpg`).put(image);
+    uploadTask.on('state_changed', 
+    (snapshot) => (error) =>  {
+         // error function ....
+      console.log(error);
+    }, 
+  () => {
+      // complete function ....
+      fire.storage().ref('posts/').child(this.state.title).child('pic.jpg').getDownloadURL().then(url => {
+          console.log(url);
+          this.setState({url});
+      })
+  });
+}
+componentDidMount() {
+    fire.auth().onAuthStateChanged((user) => {
+      if(user) {
+        this.setState({ user });
+    var ref = fire.firestore().collection('users').doc(this.state.user.uid);
+    ref.get().then((doc) => {
+      if(doc.exists) {
+        console.log(doc.data());
+        this.setState({
+          
+          users: doc.data(),
+          key: doc.id
+          
+        })
+      }
+    })
+  }
+  }); 
   }
   
   //?
@@ -25,18 +74,26 @@ class AskQuestionForm extends Component{
       [e.target.name]: e.target.value
     });
   }
+  authListener() {
+    fire.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      if(user) {
+        this.setState({ user });
+      } else {
+        this.setState({ user: null });
+      }
+    });
+  }
 
   //function to save input from "Ask a Question" Form into Firebase database
   submitQuestion = e => {
       e.preventDefault();
       const db = fire.firestore();
-      db.settings({
-            timestampsInSnapshots: true
-      });
-      const userRef = db.collection("Questions").add({ //add to collection called "Questions"
-          title: this.state.title, //store question title
-          content: this.state.content, //store question content
-          attachment: null //don't store anything in the attachment field yet as we don't know if storing images in Firebase is going to work
+      const userRef = db.collection("Questions").doc(this.state.title).set({ //add to collection called "Questions"
+          content: this.state.content,
+          createdByFname: this.state.users.firstname,
+          createdByLname: this.state.users.lastname 
+            //store question content
       });  
   };
 
@@ -86,12 +143,13 @@ class AskQuestionForm extends Component{
                   id="uploadFile"
                   type="file" 
                   accept="image/*" 
-                  noValidate
+                  onChange={this.handleChange}
                 />
             </div>
 
             {/* Submit a question button */}
-            <button type="submit" className="create">ASK A QUESTION</button>          
+            <button type="submit"  onClick={this.handleUpload} 
+            className="create">POST A RESOURCE</button>          
           </form>
         </div>
       </div>

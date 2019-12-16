@@ -16,6 +16,8 @@ class AskQuestionForm extends Component{
       user:{},
       title: "",
       content:"",
+      users:{},
+      key:'',
       image: null,
       url: '',
     };
@@ -46,6 +48,25 @@ handleUpload = () => {
       })
   });
 }
+componentDidMount() {
+    fire.auth().onAuthStateChanged((user) => {
+      if(user) {
+        this.setState({ user });
+    var ref = fire.firestore().collection('users').doc(this.state.user.uid);
+    ref.get().then((doc) => {
+      if(doc.exists) {
+        console.log(doc.data());
+        this.setState({
+          
+          users: doc.data(),
+          key: doc.id
+          
+        })
+      }
+    })
+  }
+  });
+  }
   
   //?
   updateInput = e => {
@@ -69,7 +90,10 @@ handleUpload = () => {
       e.preventDefault();
       const db = fire.firestore();
       const userRef = db.collection("Questions").doc(this.state.title).set({ //add to collection called "Questions"
-          content: this.state.content, //store question content
+          content: this.state.content,
+          createdByFname: this.state.users.firstname,
+          createdByLname: this.state.users.lastname 
+            //store question content
       });  
   };
 
