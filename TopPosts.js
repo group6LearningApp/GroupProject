@@ -2,37 +2,33 @@ import React from 'react'
 import {db , auth } from '../config/Fire.js'
 import { Link } from 'react-router-dom';
 //import { Accordion, Card, Button, Table , ListGroup } from 'react-bootstrap';
-//import '../App.css'
+import '../App.css'
 
+//Shane: Reformated Carls Code, added links to PostPage and Put Bootstrap Format in Comments in case of format change
 class TopPosts extends React.Component{
     state = {
        students:null
     }
 
     componentDidMount(){{
-      db.collection('TopPosts')
-        .get()
-        .then( snapshot=>{
-            const TopPosts = []
-            snapshot.forEach(doc=>{
-              const data = doc.data()
-              TopPosts.push(data) 
-            })
-            this.setState({TopPosts:TopPosts})
-          
+      db.collection('TopPosts').get().then( snapshot=>{
+        const TopPosts = []
+        snapshot.forEach(doc=>{
+          const data = {Col: 'TopPosts', ID: doc.id, Title: doc.data().Title}
+          TopPosts.push(data)
         })
+        this.setState({TopPosts:TopPosts})
+      })
       .catch(error =>console.log(error))
     }
-      db.collection('TopQuestions')
-        .get()
-        .then( snapshot=>{
-            const TopQuestions = []
-            snapshot.forEach(doc=>{
-              const data = doc.data()
-              TopQuestions.push(data) 
-            })
-            this.setState({TopQuestions:TopQuestions})
+      db.collection('TopQuestions').get().then( snapshot=>{
+        const TopQuestions = []
+        snapshot.forEach(doc=>{
+          const data = {Col: 'TopQuestions', ID: doc.id, Title: doc.data().Title}
+          TopQuestions.push(data) 
         })
+        this.setState({TopQuestions:TopQuestions})
+      })
       .catch(error =>console.log(error))
     }
      
@@ -68,7 +64,7 @@ class TopPosts extends React.Component{
                 <>
                   <tr>
                     <td>Title</td>
-                    <td><Link to="/PostPage">{TopPosts.Title}</Link></td>
+                    <td><Link to={{ pathname: '/PostPage', state: {Col:TopPosts.Col, ID: TopPosts.ID} }}>{TopPosts.Title}</Link></td>
                   </tr>
                 </>
               )
@@ -83,7 +79,7 @@ class TopPosts extends React.Component{
                 <>
                   <tr>
                     <td>Title</td>
-                    <td><Link to="/PostPage" /*Info={{ Post: TopQuestions.id }}*/>{TopQuestions.Title}</Link></td>
+                    <td><Link to={{ pathname: "/PostPage", state: {Col:TopQuestions.Col, ID: TopQuestions.ID} }}>{TopQuestions.Title}</Link></td>
                   </tr>
                 </>
               )
