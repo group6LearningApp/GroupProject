@@ -1,6 +1,5 @@
-# CS 353 GroupProject
+# CS 353 Team 6 GroupProject
 <h1><b>Learning App</b></h1>
-Team 6
 
 A learning app for people who want to study programming
 
