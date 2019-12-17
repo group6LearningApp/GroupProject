@@ -33,7 +33,38 @@
 
 
 
-/*Mariia Skyba: Styling of the AskQuestionForm and PostResourceForm*/
+/*.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}*/
+
+/*Mariia Skyba: Styling of the languages pages, AskQuestionForm and PostResourceForm */
+#java, #python, #csharp{
+  width: 10%;
+  height: 10%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header {
+  background-color: #282c34;
+  min-height: 8vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+/*.App-link {
+  color: #09d3ac;
+}
+
+
 .wrapper{
   margin-top: 30px;
   height: 100%;
@@ -50,7 +81,6 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #e7eef0;
   margin-left: 10px;
 }
 
@@ -144,8 +174,10 @@ border: 1px solid red;
 .tags,
 .attachment,
 .title,
+.language,
 .topic,
-.content{
+.content,
+.description{
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
@@ -155,9 +187,11 @@ border: 1px solid red;
   width: 10px;
 }
 
+.language,
 .title,
 .topic,
-.content{
+.content,
+.description{
   display: flex;
   margin-bottom: 15px;
   width: 100%;
@@ -169,10 +203,10 @@ border: 1px solid red;
 }
 
 .post_body,
-.content{
+.content
+.description{
   height: 200px;
 }
-
 .submit{
   background-color: #337c69;
   color: #fff;
@@ -188,10 +222,10 @@ border: 1px solid red;
 }
 .create{
   background-color: #337c69;
-  color: #fff;
+  color: #e9f3f4;
   border: 1px solid #fff;
   padding: 10px;
-  width: 40%;
+  width: 20%;
   margin-top: 5px;
   position: relative;
   font-weight: bold;
@@ -199,7 +233,6 @@ border: 1px solid red;
   margin-bottom: 0.25em;
   border-radius: 5px;
 }
-
 
 .createPost button:hover{
   color: #519e8a;
@@ -212,3 +245,4 @@ border: 1px solid red;
   font-weight: lighter;
 }
 /*end of forms styling */
+
