@@ -33,7 +33,7 @@ export default class Java extends Component {
       topic: "",
       tags: "",
       description:"",//was: content
-      pAttachment: "", //was: attachment
+      pAttachment: "", //was: attachment 
       
       //for dealing with uploading images
       user: {},
