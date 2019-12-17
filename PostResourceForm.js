@@ -1,3 +1,4 @@
+//REDUNDANT FILE -> THIS HAS BEEN MOVED TO JAVA.JS,PYTHON.JS, CSHARP.JS
 //PostResourceForm.js
 //Mariia Skyba
 //This is a "Post a Resource" form which gets called by "Post a Resouce" button located on the Java Language Page
