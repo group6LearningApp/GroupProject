@@ -1,3 +1,4 @@
+//REDUNDAND! THIS FORM HAS BEEN MOVED TO JAVA.JS FILE!!!
 //AskQuestionForm.js
 //Mariia Skyba
 //This is an updated "Ask a Queston" form which gets called by "Ask a Question" button located on the Java Language main page
