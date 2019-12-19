@@ -146,11 +146,12 @@ export default class Java extends Component {
       content: this.state.content, //store question content
       qAttachment: null //don't store anything in the attachment field yet as we don't know if storing images in Firebase is going to work
     });*/   
-    const userRef = db.collection("questions").doc(this.state.title).set({ //add to collection called "questions"
-          content: this.state.content, //store question content. Note that for posts it's called description
-          language: this.state.language, //store the language to which the questions is related
-          createdByFname: this.state.users.firstname,
-          createdByLname: this.state.users.lastname,
+    const userRef = db.collection("FinalQuestions").doc(this.state.title).set({ //add to collection called "questions"
+          Content: this.state.content, //store question content. Note that for posts it's called description
+          Topic: this.state.language, //store the language to which the questions is related
+          CreatorFName: this.state.users.firstname,
+          CreatorLName: this.state.users.lastname,
+          UpVotes: 0,
       }); 
   };
 
@@ -177,12 +178,13 @@ export default class Java extends Component {
       description: this.state.description, //store post content
       pAttachment: null 
     }); */
-    const userRef = db.collection("posts").doc(this.state.description).set({ //add to collection called "posts"
-      language: this.state.language, //store the language to which the post is related
-      tags: this.state.tags,
-      description: this.state.description, //note that for questions it's called content      
-      createdByFname: this.state.users.firstname,
-      createdByLname: this.state.users.lastname,
+    const userRef = db.collection("FinalPosts").doc(this.state.topic).set({ //add to collection called "posts"
+        Topic: this.state.language, //store the language to which the post is related
+        Tags: this.state.tags,
+        Content: this.state.description, //note that for questions it's called content      
+        CreatorFName: this.state.users.firstname,
+        CreatorLName: this.state.users.lastname,
+        UpVotes: 0,
       });  
   };
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import fire from '../config/Fire';
-
 export default class ProfilePic extends Component {
     constructor(props) {
         super(props);
@@ -91,7 +90,7 @@ componentDidMount() {
             <input type="file" onChange={this.handleChange}/>
             <button onClick={this.handleUpload}>Upload</button>
             <br/>
-            <img src={this.state.url || 'http://via.placeholder.com/400x300'} alt="Uploaded images" height="300" width="400" borderRadius="400/2"/>
+            <img src={this.state.url || 'http://via.placeholder.com/400x300'} alt="Uploaded images" height="300" width="400"/>
             </div>
         </React.Fragment>
         );

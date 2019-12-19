@@ -10,10 +10,46 @@ export default class ShowUser extends Component {
             user:{},
             email:'',
             users: {},
-            key: ''
+            key: '',
+            image: null,
+            url: '',
+            progress: 0,
+            photo_url:''
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleUpload = this.handleUpload.bind(this);
         
     }
+
+handleChange = e => {
+    if(e.target.files[0]) {
+        const image = e.target.files[0];
+        this.setState(() => ({image}));
+    } 
+    
+}
+   
+handleUpload = () => {
+    const {image} = this.state;
+    const uploadTask = fire.storage().ref(`images/${image.name}`).put(image);
+    uploadTask.on('state_changed', 
+    (snapshot) => {
+      // progrss function ....
+      const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      this.setState({progress});
+    }, 
+    (error) => {
+         // error function ....
+      console.log(error);
+    }, 
+  () => {
+      // complete function ....
+      fire.storage().ref('images').child(image.name).getDownloadURL().then(url => {
+          console.log(url);
+          this.setState({url});
+      })
+  });
+}
 
 componentDidMount() {
     fire.auth().onAuthStateChanged((user) => {
@@ -34,8 +70,22 @@ componentDidMount() {
   }
   }); 
   }
+  
+
+  
+
+
+  
 
     render() {
+        const style = {
+            
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
+
+        };
         return (
         <React.Fragment>
           <br/>

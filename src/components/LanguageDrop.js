@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dropdown } from 'react-bootstrap';
-import './LanguageDrop.css';
+//import './LanguageDrop.css';
 
 export const LanguageDrop = (props) => (
     <Dropdown>

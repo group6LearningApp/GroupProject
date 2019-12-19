@@ -72,7 +72,7 @@ logout() {
     return (
       <Styles>
       <Navbar expand="lg">
-        <Navbar.Brand href="/">Stack Overflow 2.0</Navbar.Brand>
+        <Navbar.Brand href="/">Learning App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
