@@ -19,41 +19,70 @@ const Styles = styled.div`
 class NavigationBar extends Component {  
   constructor(props) {
     super(props);
-    this.logout = this.logout.bind(this);
+    
     this.state = {
         user:{},
-        email:''
+        email:'',
+        users: {},
+        key: '',
+        image: null,
+        url: '',
+        progress: 0,
+        photo_url:''
     }
+    this.handleChange = this.handleChange.bind(this);
+    //this.handleUpload = this.handleUpload.bind(this);
+    this.logout = this.logout.bind(this);
+      }
+      componentDidMount() {
+        fire.auth().onAuthStateChanged((user) => {
+          if(user) {
+            this.setState({ user });
+        var ref = fire.firestore().collection('users').doc(this.state.user.uid);
+        ref.get().then((doc) => {
+          if(doc.exists) {
+            fire.storage().ref('images/').child(this.state.user.uid).child('pic.jpg').getDownloadURL().then(url => {
+              this.setState({url});
+          })
+            //console.log(doc.data());
+            this.setState({
+              
+              users: doc.data(),
+              key: doc.id
+              
+            })
+          }
+        })
+      }
+      }); 
+      }
+
+handleChange = e => {
+if(e.target.files[0]) {
+    const image = e.target.files[0];
+    this.setState(() => ({image}));
+} 
+
 }
-
-
 logout() {
     fire.auth().signOut();
 }
-
-componentDidMount() {
-    this.authListener();
-  }
-  
-
-  authListener() {
-    fire.auth().onAuthStateChanged((user) => {
-      console.log(user);
-      if(user) {
-        this.setState({ user });
-       
-      } 
-    });
-  }
 
   render() {
     return (
       <Styles>
       <Navbar expand="lg">
-        <Navbar.Brand href="/">Stack Overflow 2.0</Navbar.Brand>
+        <Navbar.Brand href="/">Learning App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
+          <Nav.Item>
+              <Nav.Link>
+                <Link to="/UserProfile">
+                  <img src={this.state.url || 'http://via.placeholder.com/400x300'} alt="Uploaded images" height="40" width="40" borderRadius="40/2"/>
+                </Link>
+              </Nav.Link>
+            </Nav.Item>
             <Nav.Item>
               <Nav.Link>
                 <Link to="/">Home</Link>
@@ -70,7 +99,9 @@ componentDidMount() {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link onClick={this.logout}>Sign out</Nav.Link>
+              <Nav.Link onClick={this.logout}>
+                <Link to="/">Sign out</Link>
+                </Nav.Link>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>

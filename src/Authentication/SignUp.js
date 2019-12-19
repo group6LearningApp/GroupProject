@@ -9,36 +9,22 @@ export default class SignUp extends Component {
         this.state = {
             email:'',
             password:'',
+            firstname:'',
+            lastname: '',
+            bio: ''
         }
-    }
-   
-
-
-    updateInput = e => {
-        this.setState({
-          [e.target.name]: e.target.value
-        });
-    }
-
-    addUser = e => {
-        e.preventDefault();
-        const db = fire.firestore();
-        db.settings({
-        timestampsInSnapshots: true
-        });
-        const userRef = db.collection("users").add({
-        firstname: this.state.firstname,
-        lastname: this.state.lastname
-        });  
-        this.setState({
-          fullname: "",
-          email: ""
-        });
-      };
+    } 
 
     signup(e) {
         e.preventDefault();
-        fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{})
+        const db = fire.firestore();
+        fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
+            return db.collection('users').doc(u.user.uid).set({
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                bio: this.state.bio
+            })
+        })
         .catch((error) => {
             console.log(error);
         });
@@ -66,6 +52,28 @@ export default class SignUp extends Component {
                     <input value={this.state.password} onChange={this.handleChange} type="password"
                     name="password" class="form-control" id="exampleInputPasword1" placeholder="Password" />
                 </div>
+                
+                <div>
+                    <label for="exampleInputFirstname">First Name</label>
+                    <input  value={this.state.firstname} onChange={this.handleChange} type="firstname" name="firstname"
+                    class="form-control" id="exampleIputFirstname" aria-describedby="emailHelp"
+                    placeholder="Enter First Name" />
+                </div>
+                <br/>
+                <div>
+                    <label for="exampleInputLastname">Last Name</label>
+                    <input  value={this.state.lastname} onChange={this.handleChange} type="lastname" name="lastname"
+                    class="form-control" id="exampleIputLastname" aria-describedby="emailHelp"
+                    placeholder="Enter Last Name" />
+                </div>
+                <br/>
+                <div>
+                    <label for="exampleInputBio">Bio</label>
+                    <input  value={this.state.bio} onChange={this.handleChange} type="bio" name="bio"
+                    class="form-control" id="exampleBio" aria-describedby="emailHelp"
+                    placeholder="Bio" />
+                </div>
+                <br/>
                 <button onClick={this.signup} type="submit" className="btn btn-success">Sign Up</button>
             </form>
 
